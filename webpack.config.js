@@ -2,11 +2,11 @@ const path = require('path');
 const TerserWebpackPlugin = require('terser-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
 
-const pluginName = 'docsify-plugin-toc';
+const pluginName = 'docsify-plugin-accordion';
 
 module.exports = {
   mode: 'production',
-  watch: false,
+  watch: true,
   entry: {
     [pluginName]: [path.join(process.cwd(), 'src', 'index.js')],
     [pluginName + '.min']: [path.join(process.cwd(), 'src', 'index.js')]
@@ -42,13 +42,9 @@ module.exports = {
     new CopyPlugin({
       patterns: [
         {
-          from: path.join(process.cwd(), 'src', 'assets', 'light.css'),
-          to: path.join(process.cwd(), 'dist', 'light.css')
+          from: path.join(process.cwd(), 'src', 'assets', 'accordion.css'),
+          to: path.join(process.cwd(), 'dist', 'accordion.css')
         }
-        // {
-        //   from: path.join(process.cwd(), 'src', 'assets', 'dark.css'),
-        //   to: path.join(process.cwd(), 'dist', 'dark.css')
-        // }
       ]
     })
   ],

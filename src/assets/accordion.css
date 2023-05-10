@@ -1,0 +1,37 @@
+/* Flex */
+.sgds-custom-accordion-header {
+	align-items: center;
+	justify-content: space-between;
+	/* Styles */
+	color: #323232;
+}
+
+.sgds-custom-accordion-header .sgds-accordian-speaker-content {
+	align-items: center;
+	justify-content: start;
+}
+
+.sgds-custom-accordion-header .sgds-accordian-speaker-content .sgds-accordian-speaker-image {
+	height: 2.75em;
+}
+
+.sgds-custom-accordion-header .is-active {
+	background-color: white;
+}
+
+.sgds-custom-accordion-header:hover {
+	background-color: white !important;
+}
+
+.sgds-accordion.is-white .sgds-accordion-header.is-active {
+	background-color: white;
+}
+
+a.sgds-accordion-header.padding--top.padding--bottom.has-text-dark.has-background-white {
+	border-bottom: #d6d6d6 solid 1px;
+	text-decoration: none;
+}
+
+a.sgds-accordion-header.padding--top.padding--bottom.has-text-dark.has-background-white.is-active > .sgds-accordion-body > p {
+	padding: 0;
+}
