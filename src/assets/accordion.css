@@ -35,3 +35,10 @@ a.sgds-accordion-header.padding--top.padding--bottom.has-text-dark.has-backgroun
 a.sgds-accordion-header.padding--top.padding--bottom.has-text-dark.has-background-white.is-active > .sgds-accordion-body > p {
 	padding: 0;
 }
+
+/* 
+For the first paragraph in the accordion body, remove the top padding
+*/
+a.sgds-accordion-header.padding--top.padding--bottom.has-text-dark.has-background-white.is-active > .sgds-accordion-body > p:first-child {
+	padding-top: 0;
+}
