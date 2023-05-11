@@ -2,31 +2,51 @@ import sanitize from 'sanitize-html';
 
 // Sanitize the HTML content of the accordion
 export function sanitizeHtml(html) {
-  return sanitize(html);
+  return sanitize(html, {
+    allowedAttributes: {
+      '*': ['style']
+    }
+  });
 }
 
 function handleAccordionClick(id) {
-  const accordion = document.querySelector(`[data-id="${id}"]`);
+  const accordion = document.querySelector(`[data-accordion-id="${id}"]`);
   const header = accordion.querySelector('a.sgds-accordion-header');
   const headerAttribute = header.getAttribute('aria-expanded');
+  const body = accordion.querySelector('div.sgds-accordion-body');
 
   // Toggle the accordion and chevron icon
   accordion.classList.toggle('is-open');
   header.classList.toggle('is-active');
-  header.setAttribute('aria-expanded', headerAttribute === 'false' ? 'true' : 'false');
-  header.querySelector('i').classList.toggle('sgds-icon-chevron-up');
-  header.querySelector('i').classList.toggle('sgds-icon-chevron-down');
+  header.querySelector('i.sgds-icon').classList.toggle('sgds-icon-chevron-up');
+  header.querySelector('i.sgds-icon').classList.toggle('sgds-icon-chevron-down');
+  body.classList.toggle('is-expanded');
+  if (headerAttribute === 'false') {
+    header.setAttribute('aria-expanded', 'true');
+    body.slideDown(300);
+  } else {
+    header.setAttribute('aria-expanded', 'false');
+    body.slideUp(300);
+  }
 }
 
 export function install(hook, vm) {
-  hook.doneEach(function () {
+  hook.afterEach(function (plainText) {
     try {
+      // Parse the plain text into HTML
+      const parser = new DOMParser();
+      const document = parser.parseFromString(plainText, 'text/html');
       const accordions = document.querySelectorAll('details > summary');
+
+      if (accordions.length === 0) {
+        return plainText;
+      }
+
       accordions.forEach((accordion, key) => {
         // Parent element of the accordion
         const sgdsAccordion = document.createElement('div');
         sgdsAccordion.classList.add('sgds-accordion', 'margin--bottom--sm');
-        sgdsAccordion.setAttribute('data-id', key);
+        sgdsAccordion.setAttribute('data-accordion-id', key);
 
         // First child of the accordion
         const accordionHeader = document.createElement('a');
@@ -34,7 +54,6 @@ export function install(hook, vm) {
         accordionHeader.setAttribute('role', 'button');
         accordionHeader.setAttribute('aria-expanded', 'false');
         accordionHeader.innerHTML = `<div>${sanitizeHtml(accordion.innerHTML)}</div><i class="sgds-icon sgds-icon-chevron-up"></i>`;
-        accordionHeader.onclick = function () { handleAccordionClick(key); };
 
         // Second child of the accordion
         const accordionBody = document.createElement('div');
@@ -57,18 +76,19 @@ export function install(hook, vm) {
             continue;
           }
 
-          if (childNode.nodeType === Node.ELEMENT_NODE) {
-            fragment.appendChild(childNode.cloneNode(true));
-          }
-
           if (childNode.nodeType === Node.TEXT_NODE && childNode.textContent.trim() !== '') {
             fragment.appendChild(document.createTextNode(childNode.textContent));
+            continue;
+          }
+
+          if (childNode.nodeType === Node.ELEMENT_NODE) {
+            fragment.appendChild(childNode.cloneNode(true));
+            continue;
           }
         }
 
         // Add the content of the details element to the accordion body
         accordionBody.appendChild(fragment);
-        console.log(accordionBody);
         // Add the header and body to the accordion
         sgdsAccordion.appendChild(accordionHeader);
         sgdsAccordion.appendChild(accordionBody);
@@ -76,8 +96,21 @@ export function install(hook, vm) {
         // Because we are in the child of the details element, we need to replace the parent of the details element
         accordion.parentNode.parentNode.replaceChild(sgdsAccordion, accordion.parentNode);
       });
+
+      // Convert the HTML back to plain text
+      return document.body.innerHTML;
     } catch (err) {
       console.log(err);
     }
+  });
+  hook.doneEach(function () {
+    // Attach accordionHeader.onclick = function () { handleAccordionClick(key); }; to the accordion headers
+    const accordions = document.querySelectorAll('.sgds-accordion-header');
+    accordions.forEach((accordion) => {
+      // Get the data-accordion-id attribute of the accordion from the parent element
+      // We do not want to use the index of the accordion because the index may change if the order of the accordions change though the data-accordion-id attribute will not change
+      const dataId = accordion.parentNode.getAttribute('data-accordion-id');
+      accordion.onclick = function () { handleAccordionClick(dataId); };
+    });
   });
 }
