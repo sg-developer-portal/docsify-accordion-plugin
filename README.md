@@ -91,11 +91,19 @@ Hello there! We are the team behind the
 3. Create an accordion how you would using markdown
     ```html
     <details>
-      <summary>This is a super cool title</summary><!-- Good place for a CTA (Call to Action) -->
-       <!-- leave an empty line *️⃣  -->
-       <p>This is a super cool paragraph</p>
-       <small>This is a super cool small paragraph</small>
-       <b>Veni Vidi Vici</b>
+    <summary>This is a super cool title</summary><!-- Good place for a CTA (Call to Action) -->
+      <!-- leave an empty line *️⃣  -->
+      <p>This is a super cool paragraph</p>
+      <small>This is a super cool small paragraph</small>
+      <b>Veni Vidi Vici</b>
+    </details>
+    <!-- leave an empty line *️⃣  -->
+
+    <details>
+    <summary><h1>Very Big Title</h1></summary><!-- Customise the Weight, Typography, etc to your liking! -->
+    <!-- leave an empty line *️⃣  -->
+
+    <!-- Compatible with plugins such as mermaid too! -->
     </details>
      <!-- leave an empty line *️⃣  -->
     ```

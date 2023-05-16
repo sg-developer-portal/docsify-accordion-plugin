@@ -16,7 +16,7 @@ function handleAccordionClick(event, id) {
 
   // Prevent
   const accordion = document.querySelector(`[data-accordion-id="${id}"]`);
-  const header = accordion.querySelector('a.sgds-accordion-header');
+  const header = accordion.querySelector('span.sgds-accordion-header');
   const headerAttribute = header.getAttribute('aria-expanded');
   const body = accordion.querySelector('div.sgds-accordion-body');
 
@@ -57,7 +57,7 @@ export function install(hook, vm) {
         sgdsAccordion.setAttribute('data-accordion-id', key);
 
         // First child of the accordion
-        const accordionHeader = document.createElement('a');
+        const accordionHeader = document.createElement('span');
         accordionHeader.classList.add('sgds-accordion-header', 'padding--top', 'padding--bottom', 'has-text-dark', 'has-background-white');
         accordionHeader.setAttribute('role', 'button');
         accordionHeader.setAttribute('aria-expanded', 'false');
