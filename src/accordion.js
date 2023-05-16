@@ -55,7 +55,6 @@ export function install(hook, vm) {
         const sgdsAccordion = document.createElement('div');
         sgdsAccordion.classList.add('sgds-accordion', 'margin--bottom');
         sgdsAccordion.setAttribute('data-accordion-id', key);
-        sgdsAccordion.setAttribute('id', `accordion-${key}`);
 
         // First child of the accordion
         const accordionHeader = document.createElement('a');
