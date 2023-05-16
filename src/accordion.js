@@ -11,7 +11,10 @@ export function sanitizeHtml(html) {
   });
 }
 
-function handleAccordionClick(id) {
+function handleAccordionClick(event, id) {
+  event.preventDefault(); // Prevent the default behavior of the click event
+
+  // Prevent
   const accordion = document.querySelector(`[data-accordion-id="${id}"]`);
   const header = accordion.querySelector('a.sgds-accordion-header');
   const headerAttribute = header.getAttribute('aria-expanded');
@@ -45,6 +48,9 @@ export function install(hook, vm) {
       }
 
       accordions.forEach((accordion, key) => {
+        // Get the attributes of the accordion
+        // const isOpen = accordion.getAttribute('is-open');
+
         // Parent element of the accordion
         const sgdsAccordion = document.createElement('div');
         sgdsAccordion.classList.add('sgds-accordion', 'margin--bottom');
@@ -115,7 +121,7 @@ export function install(hook, vm) {
       // Get the data-accordion-id attribute of the accordion from the parent element
       // We do not want to use the index of the accordion because the index may change if the order of the accordions change though the data-accordion-id attribute will not change
       const dataId = accordion.parentNode.getAttribute('data-accordion-id');
-      accordion.onclick = function () { handleAccordionClick(dataId); };
+      accordion.onclick = function (event) { handleAccordionClick(event, dataId); };
     });
   });
 }

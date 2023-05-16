@@ -75,14 +75,14 @@ Hello there! We are the team behind the
     <!-- head -->
     <head>
     	<!-- Insert your different plugins here... -->
-    	<link rel="stylesheet" href="https://unpkg.com/@developerportalsg/docsify-accordion-plugin/dist/accordion.css" />
+    	<link rel="stylesheet" href="https://unpkg.com/@developerportalsg/docsify-accordion-plugin@latest/dist/accordion.css" />
     	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@govtechsg/sgds@1.4.0/css/sgds.css" />
     </head>
 
     <!-- body -->
     <body>
     	<!-- Insert your different plugins scripts here... -->
-    	<script src="https://unpkg.com/@developerportalsg/docsify-accordion-plugin/dist/docsify-accordion-plugin.min.js"></script>
+    	<script src="https://unpkg.com/@developerportalsg/docsify-accordion-plugin@latest/dist/docsify-plugin-accordion.min.js"></script>
     </body>
     ```
 
@@ -91,20 +91,30 @@ Hello there! We are the team behind the
 3. Create an accordion how you would using markdown
     ```html
     <details>
-      <summary is-open=true>This is a super cool title</summary><!-- Good place for a CTA (Call to Action) -->
-       <!-- empty line *️⃣  -->
+      <summary>This is a super cool title</summary><!-- Good place for a CTA (Call to Action) -->
+       <!-- leave an empty line *️⃣  -->
        <p>This is a super cool paragraph</p>
        <small>This is a super cool small paragraph</small>
        <b>Veni Vidi Vici</b>
     </details>
-     <!-- empty line *️⃣  -->
+     <!-- leave an empty line *️⃣  -->
     ```
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 ## Options
+Here are the attributes to customise the logic or styles of the accordion
 
-| Summary Argument        | Type       | Description                                                                                                                                           |
+```html
+<details is-open=true is-size="small" is-color="is-warning">
+  <summary>...</summary>
+
+   ...
+</details>
+  <!-- leave an empty line *️⃣  -->
+```
+
+| details Attributes | Type | Description |
 | --------------- | ---------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `is-open`   | `boolean`   | To expand the accordion on page load. |
 | `is-*size*`        | `string`   | Replace `*size*` with is-small, is-medium & is-large for various text sizes. |

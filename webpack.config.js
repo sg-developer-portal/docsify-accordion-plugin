@@ -6,7 +6,7 @@ const pluginName = 'docsify-accordion-plugin';
 
 module.exports = {
   mode: 'production',
-  watch: process.env.WATCH || false,
+  watch: process.env.WATCH === 'true' || false,
   entry: {
     [pluginName]: [path.join(process.cwd(), 'src', 'index.js')],
     [pluginName + '.min']: [path.join(process.cwd(), 'src', 'index.js')]
