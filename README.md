@@ -14,7 +14,7 @@
 [![Forks](https://img.shields.io/github/forks/sg-developer-portal/docsify-accordion-plugin.svg)][forks-url]
 [![Stargazers](https://img.shields.io/github/stars/sg-developer-portal/docsify-accordion-plugin.svg)][stars-url]
 [![MIT License](https://img.shields.io/github/license/sg-developer-portal/docsify-accordion-plugin.svg)][license-url]
-[![npm](https://img.shields.io/npm/v/@developerportalsg/docsify-plugin-toc.svg?style=flat-square)](npm-url)
+[![npm](https://img.shields.io/npm/v/@developerportalsg/docsify-accordion-plugin.svg?style=flat-square)](npm-url)
 
 <!-- PROJECT LOGO -->
 <br />
@@ -57,7 +57,7 @@ Hello there! We are the team behind the
 
 ## Usage
 
-1. Configure docsify-plugin-toc:
+1. Configure docsify-accordion-plugin:
 
     ```html
     <script>
@@ -75,26 +75,40 @@ Hello there! We are the team behind the
     <!-- head -->
     <head>
     	<!-- Insert your different plugins here... -->
-    	<link rel="stylesheet" href="https://unpkg.com/@developerportalsg/docsify-plugin-toc/dist/light.css" />
+    	<link rel="stylesheet" href="https://unpkg.com/@developerportalsg/docsify-accordion-plugin/dist/accordion.css" />
     	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@govtechsg/sgds@1.4.0/css/sgds.css" />
     </head>
 
     <!-- body -->
     <body>
     	<!-- Insert your different plugins scripts here... -->
-    	<script src="https://unpkg.com/@developerportalsg/docsify-plugin-toc/dist/docsify-plugin-toc.min.js"></script>
+    	<script src="https://unpkg.com/@developerportalsg/docsify-accordion-plugin/dist/docsify-accordion-plugin.min.js"></script>
     </body>
+    ```
+
+<p align="right">(<a href="#top">back to top</a>)</p>
+
+3. Create an accordion how you would using markdown
+    ```html
+    <details>
+      <summary is-open=true>This is a super cool title</summary><!-- Good place for a CTA (Call to Action) -->
+       <!-- empty line *️⃣  -->
+       <p>This is a super cool paragraph</p>
+       <small>This is a super cool small paragraph</small>
+       <b>Veni Vidi Vici</b>
+    </details>
+     <!-- empty line *️⃣  -->
     ```
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 ## Options
 
-| Argument        | Type       | Description                                                                                                                                           |
+| Summary Argument        | Type       | Description                                                                                                                                           |
 | --------------- | ---------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `tocMaxLevel`   | `number`   | The maximum depth of the headings printed on the ToC. If you set `tocMaxLevel` to 3, I recommend you to set `subMaxLevel` to 2 avoid ToC duplication. |
-| `target`        | `string`   | The target heading printed on the ToC. It's used as an argument to query DOM with `querySelectorAll()`                                                |
-| `ignoreHeaders` | `string[]` | ignore header name keyword list, (e.g. ['develop', /develop/i], support Regular expressions)                                                          |
+| `is-open`   | `boolean`   | To expand the accordion on page load. |
+| `is-*size*`        | `string`   | Replace `*size*` with is-small, is-medium & is-large for various text sizes. |
+| `is-*color*` | `string` | Replace `*color*` with contextual text color classes (is-danger, is-warning, is-success etc.) for various background color. |
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -149,4 +163,4 @@ You can find our plugin on GitHub. Please refer to the README file for detailed 
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://linkedin.com/in/linkedin_username
 [product-screenshot]: images/screenshot.png
-[npm-url]: https://www.npmjs.com/package/@developerportalsg/docsify-plugin-toc
+[npm-url]: https://www.npmjs.com/package/@developerportalsg/docsify-accordion-plugin

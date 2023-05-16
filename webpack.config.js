@@ -2,7 +2,7 @@ const path = require('path');
 const TerserWebpackPlugin = require('terser-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
 
-const pluginName = 'docsify-plugin-accordion';
+const pluginName = 'docsify-accordion-plugin';
 
 module.exports = {
   mode: 'production',
