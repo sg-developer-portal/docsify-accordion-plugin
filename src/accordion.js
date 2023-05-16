@@ -3,6 +3,8 @@ import sanitize from 'sanitize-html';
 // Sanitize the HTML content of the accordion
 export function sanitizeHtml(html) {
   return sanitize(html, {
+    // Allow emojis
+    allowedTags: sanitize.defaults.allowedTags.concat(['img']),
     allowedAttributes: {
       '*': ['style']
     }
@@ -21,12 +23,11 @@ function handleAccordionClick(id) {
   header.querySelector('i.sgds-icon').classList.toggle('sgds-icon-chevron-up');
   header.querySelector('i.sgds-icon').classList.toggle('sgds-icon-chevron-down');
   body.classList.toggle('is-expanded');
+
   if (headerAttribute === 'false') {
     header.setAttribute('aria-expanded', 'true');
-    body.slideDown(300);
   } else {
     header.setAttribute('aria-expanded', 'false');
-    body.slideUp(300);
   }
 }
 
@@ -37,16 +38,18 @@ export function install(hook, vm) {
       const parser = new DOMParser();
       const document = parser.parseFromString(plainText, 'text/html');
       const accordions = document.querySelectorAll('details > summary');
+      const useSGDSAccordion = (window.$docsify.useSGDSAccordion && window.$docsify.useSGDSAccordion) || true; // Created to support feature flagging. Default is set to true.
 
-      if (accordions.length === 0) {
+      if (!useSGDSAccordion || accordions.length === 0) {
         return plainText;
       }
 
       accordions.forEach((accordion, key) => {
         // Parent element of the accordion
         const sgdsAccordion = document.createElement('div');
-        sgdsAccordion.classList.add('sgds-accordion', 'margin--bottom--sm');
+        sgdsAccordion.classList.add('sgds-accordion', 'margin--bottom');
         sgdsAccordion.setAttribute('data-accordion-id', key);
+        sgdsAccordion.setAttribute('id', `accordion-${key}`);
 
         // First child of the accordion
         const accordionHeader = document.createElement('a');
@@ -76,11 +79,13 @@ export function install(hook, vm) {
             continue;
           }
 
+          // Add comment for future ppl
           if (childNode.nodeType === Node.TEXT_NODE && childNode.textContent.trim() !== '') {
             fragment.appendChild(document.createTextNode(childNode.textContent));
             continue;
           }
 
+          // Add comment for future ppl
           if (childNode.nodeType === Node.ELEMENT_NODE) {
             fragment.appendChild(childNode.cloneNode(true));
             continue;
