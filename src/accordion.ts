@@ -1,10 +1,14 @@
-import sanitize from 'sanitize-html';
+import sanitize from "sanitize-html";
 
 declare global {
 	interface Window {
 		$docsify: any;
 	}
 }
+
+type AccordionOpenOnLoadOptions = boolean;
+type AccordionColorOptions = "small" | "medium" | "large";
+type AccordionSizeOptions = "black" | "dark" | "primary" | "secondary" | "info" | "success" | "warning" | "danger" | "white" | null;
 
 // Sanitize the HTML content of the accordion
 export function sanitizeHtml(html: string): string {
@@ -60,15 +64,22 @@ export function install(hook: any, vm: any) {
 				return plainText;
 			}
 
-			accordions.forEach((accordion, key) => {
+			accordions.forEach((accordion: Element, key: number) => {
+				const isColor = (accordion?.parentElement?.dataset?.isColor as AccordionSizeOptions) || null;
+				const isSize = (accordion?.parentElement?.dataset?.isSize as AccordionColorOptions) || "medium";
+				const isOpen: AccordionOpenOnLoadOptions = accordion?.parentElement?.dataset?.isOpen?.toLowerCase() === "true" || false;
+
 				// Parent element of the accordion
 				const sgdsAccordion = document.createElement("div");
-				sgdsAccordion.classList.add("sgds-accordion", "margin--bottom");
+				// Apply attribute-based class names
+				sgdsAccordion.classList.add("sgds-accordion", "margin--bottom", `is-${isSize}`);
+				if (isOpen) sgdsAccordion.classList.add("is-open");
+				if (isColor) sgdsAccordion.classList.add(`is-${isColor}`);
 				sgdsAccordion.setAttribute("data-accordion-id", `${key}`);
 
 				// First child of the accordion
 				const accordionHeader = document.createElement("span");
-				accordionHeader.classList.add("sgds-accordion-header", "padding--top", "padding--bottom", "has-text-dark", "has-background-white");
+				accordionHeader.classList.add("sgds-accordion-header", "padding--top", "padding--bottom");
 				accordionHeader.setAttribute("role", "button");
 				accordionHeader.setAttribute("aria-expanded", "false");
 				accordionHeader.innerHTML = `<div>${sanitizeHtml(accordion.innerHTML)}</div><i class="sgds-icon sgds-icon-chevron-up"></i>`;
