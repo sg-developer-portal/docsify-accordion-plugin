@@ -1,3 +1,9 @@
+/**
+ * NOTE THAT THIS IS USED FOR LOCAL DEVELOPMENT ONLY AND IS NOT INCLUDED IN THE BUILD FILES
+ *
+ * THIS HELPS THE DEVELOPER TO TEST LOCALLY FOR FASTER ITERATIONS AND BUG FIXES.
+ */
+
 const http = require('http');
 const fs = require('fs');
 const path = require('path');
