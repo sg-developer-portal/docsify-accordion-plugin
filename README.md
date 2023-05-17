@@ -15,6 +15,7 @@
 [![Stargazers](https://img.shields.io/github/stars/sg-developer-portal/docsify-accordion-plugin.svg)][stars-url]
 [![MIT License](https://img.shields.io/github/license/sg-developer-portal/docsify-accordion-plugin.svg)][license-url]
 [![npm](https://img.shields.io/npm/v/@developerportalsg/docsify-accordion-plugin.svg?style=flat-square)](npm-url)
+[![Release package](https://github.com/sg-developer-portal/docsify-accordion-plugin/actions/workflows/release_package.yml/badge.svg)](https://github.com/sg-developer-portal/docsify-accordion-plugin/actions/workflows/release_package.yml)
 
 <!-- PROJECT LOGO -->
 <br />
