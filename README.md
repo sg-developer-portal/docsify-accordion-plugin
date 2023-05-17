@@ -114,20 +114,20 @@ Hello there! We are the team behind the
 ## Options
 Here are the attributes to customise the logic or styles of the accordion
 
+| Attribute | Type | Default | Description |
+| --------- | ---- | ------- | ----------- |
+| `data-is-open="true"` | `boolean` | `false` | To expand the accordion on page load. |
+| `data-is-size="*VALUE*"` | `string` | `medium` | Replace `*VALUE*` with `is-small`, `is-medium`, or `is-large` for various text sizes. |
+| `data-is-color="*VALUE*"` | `string` | `null` | Replace `*VALUE*` with contextual text color classes (`is-danger`, `is-warning`, `is-success`, etc.) for various background colors. For more colour choices, reference <a href="https://v1.designsystem.tech.gov.sg/docs/colours/">here</a>! |
+
 ```html
-<details is-open=true is-size="small" is-color="is-warning">
+<details data-is-open=true data-is-size="small" data-color="is-warning">
   <summary>...</summary>
 
    ...
 </details>
   <!-- leave an empty line *️⃣  -->
 ```
-
-| details Attributes | Type | Description |
-| --------------- | ---------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `is-open`   | `boolean`   | To expand the accordion on page load. |
-| `is-*size*`        | `string`   | Replace `*size*` with is-small, is-medium & is-large for various text sizes. |
-| `is-*color*` | `string` | Replace `*color*` with contextual text color classes (is-danger, is-warning, is-success etc.) for various background color. |
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
