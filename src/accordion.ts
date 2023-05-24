@@ -66,7 +66,7 @@ export function install(hook: any, vm: any) {
 
 			accordions.forEach((accordion: Element, key: number) => {
 				const isColor = (accordion?.parentElement?.dataset?.isColor as AccordionSizeOptions) || null;
-				const isSize = (accordion?.parentElement?.dataset?.isSize as AccordionColorOptions) || "medium";
+				const isSize = (accordion?.parentElement?.dataset?.isSize as AccordionColorOptions) || "small";
 				const isOpen: AccordionOpenOnLoadOptions = accordion?.parentElement?.dataset?.isOpen?.toLowerCase() === "true" || false;
 
 				// Parent element of the accordion
