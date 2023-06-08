@@ -82,7 +82,7 @@ export function install(hook: any, vm: any) {
 				accordionHeader.classList.add("sgds-accordion-header", "padding--top", "padding--bottom");
 				accordionHeader.setAttribute("role", "button");
 				accordionHeader.setAttribute("aria-expanded", "false");
-				accordionHeader.innerHTML = `<div>${sanitizeHtml(accordion.innerHTML)}</div><i class="sgds-icon sgds-icon-chevron-up"></i>`;
+				accordionHeader.innerHTML = `<div>${sanitizeHtml(accordion.innerHTML)}</div><i class="sgds-icon sgds-icon-chevron-down"></i>`;
 
 				// Second child of the accordion
 				const accordionBody = document.createElement("div");
