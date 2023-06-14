@@ -52,6 +52,10 @@ a.sgds-accordion-header.padding--top.padding--bottom.has-text-dark.has-backgroun
 	margin-bottom: 0.5em !important;
 }
 
+span.sgds-accordion-header:hover {
+	cursor: pointer;
+}
+
 /* sgds-accordion.is-active{
 	color: var(--sidebar-name-color);
 } */
