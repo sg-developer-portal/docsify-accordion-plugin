@@ -42,3 +42,16 @@ For the first paragraph in the accordion body, remove the top padding
 a.sgds-accordion-header.padding--top.padding--bottom.has-text-dark.has-background-white.is-active > .sgds-accordion-body > p:first-child {
 	padding-top: 0px !important;
 }
+
+/* sgds-accordion.is-active{
+	color: var(--sidebar-name-color);
+} */
+
+div.sgds-accordion-header {
+	font-size: 1.25em;
+}
+
+div.sgds-accordion-body {
+	font-size: 1.25em;
+}
+
