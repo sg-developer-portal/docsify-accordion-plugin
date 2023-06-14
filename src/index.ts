@@ -1,3 +1,4 @@
+import "./assets/accordion.scss"
 import { install } from "./accordion";
 
 if (!window.$docsify) {

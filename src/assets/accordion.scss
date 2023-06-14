@@ -1,0 +1,38 @@
+.sgds-accordion {
+	.sgds-accordion-header {
+		/* Flex */
+		align-items: center;
+		justify-content: space-between;
+		/* Styles */
+		color: #323232;
+		background-color: white;
+
+		.is-active {
+			background-color: white;
+		}
+
+		&:hover {
+			cursor: pointer !important;
+		}
+
+		&:focus {
+			outline: none;
+		}
+	}
+
+	.sgds-accordion-body {
+		font-size: 1.25rem;
+
+		// Set the first element to have .5 rem margin top
+		// for example
+		// <div class="sgds-accordion-body"><p>First element</p><p>Second element</p></div>
+		// First element will have .5 rem margin top and second element will have .5 rem margin bottom
+		& > *:first-child {
+			margin-top: 0.25rem !important;
+		}
+
+		& > *:last-child {
+			margin-bottom: 0.25rem !important;
+		}
+	}
+}

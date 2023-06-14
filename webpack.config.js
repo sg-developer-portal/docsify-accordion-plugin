@@ -1,6 +1,7 @@
 const path = require('path');
 const TerserWebpackPlugin = require('terser-webpack-plugin');
-const CopyPlugin = require('copy-webpack-plugin');
+// const CopyPlugin = require('copy-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 const pluginName = 'docsify-accordion-plugin';
 
@@ -13,6 +14,14 @@ module.exports = {
         test: /\.ts?$/,
         loader: 'ts-loader',
         exclude: /node_modules/
+      },
+      {
+        test: /\.scss$/,
+        use: [
+          MiniCssExtractPlugin.loader,
+          'css-loader',
+          'sass-loader'
+        ]
       }
     ]
   },
@@ -51,13 +60,16 @@ module.exports = {
     ]
   },
   plugins: [
-    new CopyPlugin({
-      patterns: [
-        {
-          from: path.join(process.cwd(), 'src', 'assets', 'accordion.css'),
-          to: path.join(process.cwd(), 'dist', 'accordion.css')
-        }
-      ]
+    new MiniCssExtractPlugin({
+      filename: 'accordion.css'
     })
+    // new CopyPlugin({
+    //   patterns: [
+    //     {
+    //       from: path.join(process.cwd(), 'src', 'assets', 'accordion.css'),
+    //       to: path.join(process.cwd(), 'dist', 'accordion.css')
+    //     }
+    //   ]
+    // })
   ]
 };

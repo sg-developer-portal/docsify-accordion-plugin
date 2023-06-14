@@ -19,7 +19,7 @@ type AccordionColorOptions = "black" | "dark" | "primary" | "secondary" | "info"
 function generateAccordions(accordions: NodeListOf<Element>, document: Document): void {
 	accordions.forEach((accordion: Element, key: number) => {
 		// Get the options for the accordion
-		const isColor = accordion?.parentElement?.dataset?.isColor as AccordionSizeOptions ?? null;
+		const isColor = accordion?.parentElement?.dataset?.isColor as AccordionColorOptions ?? null;
 		// const isSize = accordion?.parentElement?.dataset?.isSize as AccordionColorOptions ?? "medium";
 		const isOpen: AccordionOpenOnLoadOptions = accordion?.parentElement?.dataset?.isOpen?.toLowerCase() === "true" || false;
 
@@ -32,17 +32,16 @@ function generateAccordions(accordions: NodeListOf<Element>, document: Document)
 
 		// Create the header of the accordion
 		const accordionHeader = document.createElement("span");
-		accordionHeader.classList.add("sgds-accordion-header", "padding--top", "padding--bottom");
+		accordionHeader.classList.add("sgds-accordion-header", "padding--top", "padding--bottom", "has-text-dark", "has-background-white");
+		if (isOpen) accordionHeader.classList.add("is-active");
+		if (isOpen) accordionHeader.classList.add("has-text-weight-semibold")
 		accordionHeader.setAttribute("role", "button");
 		accordionHeader.setAttribute("aria-expanded", `${isOpen}`);
-		if (isOpen) accordionHeader.classList.add("is-active");
-		accordionHeader.innerHTML = `<div class="${isOpen && 'has-text-weight-semibold'}">${sanitizeHtml(accordion.innerHTML)}</div><i class="sgds-icon ${isOpen ? "sgds-icon-chevron-up" : "sgds-icon-chevron-down"}"></i>`;
+		accordionHeader.innerHTML = `<div>${sanitizeHtml(accordion.innerHTML)}</div><i class="sgds-icon ${isOpen ? "sgds-icon-chevron-up" : "sgds-icon-chevron-down"}"></i>`;
 
 		// Create the body of the accordion
 		const accordionBody = document.createElement("div");
-		accordionBody.classList.add("sgds-accordion-body");
-		accordionBody.style.fontSize = "1.25rem";
-		// ADD "is-size-7" WHEN DOCSIFY THEMABLE IS FIXED
+		accordionBody.classList.add("sgds-accordion-body", "sgds-custom-accordion-body");
 		// We are currently in the summary element, so we need to get the parent element before we can extract the HTML content of the details element apart from the summary element
 		const accordionParent: HTMLElement = accordion.parentNode as HTMLElement;
 		// Instead of appending the elements directly to the DOM, we append them to a document fragment and then append the fragment to the DOM. This can improve performance by reducing the number of DOM operations.
@@ -118,11 +117,10 @@ function handleAccordionClick(id: string): void {
 	// Toggle the accordion and chevron icon
 	accordion?.classList.toggle("is-open");
 	header?.classList.toggle("is-active");
-	header?.querySelector("div")?.classList.toggle("has-text-weight-semibold");
+	header?.classList.toggle("has-text-weight-semibold");
 	header?.querySelector("i.sgds-icon")?.classList.toggle("sgds-icon-chevron-up");
 	header?.querySelector("i.sgds-icon")?.classList.toggle("sgds-icon-chevron-down");
 	body?.classList.toggle("is-expanded");
-
 
 	if (headerAttribute === "false") {
 		header?.setAttribute("aria-expanded", "true");
