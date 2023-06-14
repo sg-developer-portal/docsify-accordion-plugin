@@ -20,7 +20,7 @@ function generateAccordions(accordions: NodeListOf<Element>, document: Document)
 	accordions.forEach((accordion: Element, key: number) => {
 		// Get the options for the accordion
 		const isColor = accordion?.parentElement?.dataset?.isColor as AccordionSizeOptions ?? null;
-		const isSize = accordion?.parentElement?.dataset?.isSize as AccordionColorOptions ?? "medium";
+		// const isSize = accordion?.parentElement?.dataset?.isSize as AccordionColorOptions ?? "medium";
 		const isOpen: AccordionOpenOnLoadOptions = accordion?.parentElement?.dataset?.isOpen?.toLowerCase() === "true" || false;
 
 		// Create the accordion container
@@ -28,7 +28,7 @@ function generateAccordions(accordions: NodeListOf<Element>, document: Document)
 		if (isOpen) sgdsAccordion.classList.add("is-open");
 		if (isColor) sgdsAccordion.classList.add(`is-${isColor}`);
 		sgdsAccordion.setAttribute("data-accordion-id", `${key}`);
-		sgdsAccordion.classList.add("sgds-accordion", "margin--bottom", `is-${isSize}`);
+		sgdsAccordion.classList.add("sgds-accordion", "margin--bottom");
 
 		// Create the header of the accordion
 		const accordionHeader = document.createElement("span");
@@ -36,11 +36,11 @@ function generateAccordions(accordions: NodeListOf<Element>, document: Document)
 		accordionHeader.setAttribute("role", "button");
 		accordionHeader.setAttribute("aria-expanded", `${isOpen}`);
 		if (isOpen) accordionHeader.classList.add("is-active");
-		accordionHeader.innerHTML = `<div class="${isOpen && 'has-text-weight-bold'}">${sanitizeHtml(accordion.innerHTML)}</div><i class="sgds-icon ${isOpen ? "sgds-icon-chevron-up" : "sgds-icon-chevron-down"}"></i>`;
+		accordionHeader.innerHTML = `<div class="${isOpen && 'has-text-weight-semibold'}">${sanitizeHtml(accordion.innerHTML)}</div><i class="sgds-icon ${isOpen ? "sgds-icon-chevron-up" : "sgds-icon-chevron-down"}"></i>`;
 
 		// Create the body of the accordion
 		const accordionBody = document.createElement("div");
-		accordionBody.classList.add("sgds-accordion-body");
+		accordionBody.classList.add("sgds-accordion-body", "is-size-7");
 		// We are currently in the summary element, so we need to get the parent element before we can extract the HTML content of the details element apart from the summary element
 		const accordionParent: HTMLElement = accordion.parentNode as HTMLElement;
 		// Instead of appending the elements directly to the DOM, we append them to a document fragment and then append the fragment to the DOM. This can improve performance by reducing the number of DOM operations.
@@ -48,7 +48,6 @@ function generateAccordions(accordions: NodeListOf<Element>, document: Document)
 		// Iterate over the child nodes of the details element
 		for (let i = 0; i < accordionParent.childNodes.length; i++) {
 			const childNode = accordionParent.childNodes[i];
-
 			// Skip the summary element by not adding it to the fragment
 			if (childNode instanceof Element && childNode.tagName.toLowerCase() === "summary") {
 				continue;
@@ -61,7 +60,10 @@ function generateAccordions(accordions: NodeListOf<Element>, document: Document)
 
 			// Add comment for future ppl
 			if (childNode.nodeType === Node.TEXT_NODE && childNode.textContent?.trim() !== "") {
-				fragment.appendChild(document.createTextNode(childNode.textContent || ""));
+				// If it's a text node, we need to wrap it in a paragraph element so that it can be styled
+				const paragraph = document.createElement("span");
+				paragraph.textContent = childNode.textContent;
+				fragment.appendChild(paragraph);
 				continue;
 			}
 
@@ -114,7 +116,7 @@ function handleAccordionClick(id: string): void {
 	// Toggle the accordion and chevron icon
 	accordion?.classList.toggle("is-open");
 	header?.classList.toggle("is-active");
-	header?.querySelector("div")?.classList.toggle("has-text-weight-bold");
+	header?.querySelector("div")?.classList.toggle("has-text-weight-semibold");
 	header?.querySelector("i.sgds-icon")?.classList.toggle("sgds-icon-chevron-up");
 	header?.querySelector("i.sgds-icon")?.classList.toggle("sgds-icon-chevron-down");
 	body?.classList.toggle("is-expanded");
