@@ -34,6 +34,7 @@
 		"eslint-plugin-standard": "^5.0.0",
 		"mini-css-extract-plugin": "^2.7.6",
 		"sanitize-html": "^2.10.0",
+		"sass": "^1.63.4",
 		"sass-loader": "^13.3.2",
 		"ts-loader": "^9.4.2",
 		"typescript": "^5.0.4",
