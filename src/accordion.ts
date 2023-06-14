@@ -40,7 +40,9 @@ function generateAccordions(accordions: NodeListOf<Element>, document: Document)
 
 		// Create the body of the accordion
 		const accordionBody = document.createElement("div");
-		accordionBody.classList.add("sgds-accordion-body", "is-size-7");
+		accordionBody.classList.add("sgds-accordion-body");
+		accordionBody.style.fontSize = "1.25rem";
+		// ADD "is-size-7" WHEN DOCSIFY THEMABLE IS FIXED
 		// We are currently in the summary element, so we need to get the parent element before we can extract the HTML content of the details element apart from the summary element
 		const accordionParent: HTMLElement = accordion.parentNode as HTMLElement;
 		// Instead of appending the elements directly to the DOM, we append them to a document fragment and then append the fragment to the DOM. This can improve performance by reducing the number of DOM operations.

@@ -56,6 +56,10 @@ span.sgds-accordion-header:hover {
 	cursor: pointer;
 }
 
+/* THIS IS A STOP GAP SOLUTION UNTIL WE RESOLVE DOCSIFY THEMABLE WEIRD ISSUE*/
+/* .sgds-accordion-body > span {
+	font-size: 1.25rem;
+} */
 /* sgds-accordion.is-active{
 	color: var(--sidebar-name-color);
 } */
