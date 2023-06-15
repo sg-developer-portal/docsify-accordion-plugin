@@ -3,12 +3,13 @@ import sanitize from "sanitize-html";
 declare global {
 	interface Window {
 		$docsify: any;
+		jQuery: any;
 	}
 }
 
 type AccordionOpenOnLoadOptions = boolean;
-type AccordionSizeOptions = "small" | "medium" | "large";
-type AccordionColorOptions = "black" | "dark" | "primary" | "secondary" | "info" | "success" | "warning" | "danger" | "white" | null;
+// type AccordionSizeOptions = "small" | "medium" | "large";
+type AccordionColorOptions = "black" | "dark" | "primary" | "secondary" | "info" | "success" | "warning" | "danger" | "white";
 
 /**
  * Generates the accordions based on the details and summary elements.
@@ -106,27 +107,64 @@ function sanitizeHtml(html: string): string {
  * @returns {void}
  */
 function handleAccordionClick(id: string): void {
-	// Find the accordion element based on the ID
-	const accordion: HTMLElement | null = document.querySelector(`[data-accordion-id="${id}"]`);
+	const isJQueryLoaded: boolean = typeof window.jQuery !== 'undefined';
 
-	// Find the header, header attribute, and body elements within the accordion
-	const header = accordion?.querySelector<HTMLElement>("span.sgds-accordion-header");
-	const headerAttribute = header?.getAttribute("aria-expanded");
-	const body = accordion?.querySelector<HTMLElement>("div.sgds-accordion-body");
-
-	// Toggle the accordion and chevron icon
-	accordion?.classList.toggle("is-open");
-	header?.classList.toggle("is-active");
-	header?.classList.toggle("has-text-weight-semibold");
-	header?.querySelector("i.sgds-icon")?.classList.toggle("sgds-icon-chevron-up");
-	header?.querySelector("i.sgds-icon")?.classList.toggle("sgds-icon-chevron-down");
-	body?.classList.toggle("is-expanded");
-
-	if (headerAttribute === "false") {
-		header?.setAttribute("aria-expanded", "true");
+	if (!isJQueryLoaded) {
+		console.dir("JQuery is not loaded. Skipping accordion animation.");
+		toggleAccordionElements(id);
 	} else {
-		header?.setAttribute("aria-expanded", "false");
+		const $: JQueryStatic = window.jQuery;
+		const accordion: JQuery<HTMLElement> = $(`[data-accordion-id="${id}"]`);
+		const accordionHeader: JQuery<HTMLElement> = accordion.children(".sgds-accordion-header");
+		const accordionBody: JQuery<HTMLElement> = accordion.children(".sgds-accordion-body");
+
+		toggleAccordionElementsUsingJQuery(accordionHeader, accordionBody, !accordionHeader.hasClass("is-active"));
 	}
+}
+
+/**
+ * Toggles the accordion elements.
+ * @param {string} id - The ID of the accordion.
+ */
+function toggleAccordionElements(id: string): void {
+	// Constants
+	const accordion = document.querySelector(`[data-accordion-id="${id}"]`);
+	const accordionHeader = accordion?.querySelector<HTMLElement>("span.sgds-accordion-header");
+	const accordionBody = accordion?.querySelector<HTMLElement>("div.sgds-accordion-body");
+
+	const isExpanded: boolean = accordionHeader?.getAttribute("aria-expanded") === "false";
+
+	accordion?.classList.toggle("is-open");
+	accordionHeader?.classList.toggle("is-active");
+	accordionHeader?.classList.toggle("has-text-weight-semibold");
+	accordionHeader?.setAttribute("aria-expanded", String(!isExpanded));
+	accordionBody?.classList.toggle("is-expanded");
+
+	const icon = accordionHeader?.querySelector<HTMLElement>("i.sgds-icon");
+	icon?.classList.toggle("sgds-icon-chevron-up");
+	icon?.classList.toggle("sgds-icon-chevron-down");
+}
+
+/**
+ * Toggles the accordion elements using JQuery.
+ * @param {JQuery<HTMLElement>} accordionHeader - The accordion header element.
+ * @param {JQuery<HTMLElement>} accordionBody - The accordion body element.
+ * @param {boolean} shouldExpand - Whether the accordion should be expanded or not.
+ */
+function toggleAccordionElementsUsingJQuery(
+	accordionHeader: JQuery<HTMLElement>,
+	accordionBody: JQuery<HTMLElement>,
+	shouldExpand: boolean
+): void {
+	accordionHeader
+		.toggleClass("is-active", shouldExpand)
+		.toggleClass("has-text-weight-semibold", shouldExpand)
+		.attr("aria-expanded", String(shouldExpand))
+		.children("i")
+		.toggleClass("sgds-icon-chevron-up", shouldExpand)
+		.toggleClass("sgds-icon-chevron-down", !shouldExpand);
+
+	accordionBody.slideToggle(300);
 }
 
 export function install(hook: any, vm: any) {
@@ -153,10 +191,11 @@ export function install(hook: any, vm: any) {
 	hook.doneEach(function () {
 		// Fetch all the accordions
 		const accordionHeaders: NodeListOf<Element> = document.querySelectorAll(".sgds-accordion-header");
+
 		// Add event listener to each accordion
 		accordionHeaders.forEach((accordionHeader: Element) => {
-			const accordionContainer: HTMLElement | null = accordionHeader.parentNode as HTMLElement;
-			const accordionId: string | null = accordionContainer.getAttribute("data-accordion-id");
+			const accordionContainer = accordionHeader.parentNode as HTMLElement;
+			const accordionId = accordionContainer.getAttribute("data-accordion-id");
 
 			accordionHeader.addEventListener("click", () => {
 				if (accordionId) handleAccordionClick(accordionId);
