@@ -48,5 +48,8 @@
 	"bugs": {
 		"url": "https://github.com/sg-developer-portal/docsify-accordion-plugin/issues"
 	},
-	"homepage": "https://github.com/sg-developer-portal/docsify-accordion-plugin#readme"
+	"homepage": "https://github.com/sg-developer-portal/docsify-accordion-plugin#readme",
+	"dependencies": {
+		"@types/jquery": "^3.5.16"
+	}
 }
