@@ -3,7 +3,7 @@ name: Publish to NPM with Semantic Release
 on:
   push:
     branches:
-      - test-workflow
+      - main
 jobs:
   release:
     runs-on: ubuntu-latest
