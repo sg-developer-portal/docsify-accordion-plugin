@@ -3,8 +3,7 @@ name: Publish to NPM with Semantic Release
 on:
   push:
     branches:
-      - fix-hide-sidebar
-
+      - test-workflow
 jobs:
   release:
     runs-on: ubuntu-latest
