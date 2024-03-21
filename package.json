@@ -1,6 +1,6 @@
 {
 	"name": "@developerportalsg/docsify-accordion-plugin",
-	"version": "1.0.14",
+	"version": "1.0.15",
 	"description": "A Docsify Accordion that replaces the standard markdown accordion to an accordion that follows the SGDS Convention for the Singapore Government Documentation Portal",
 	"main": "src",
 	"private": true,

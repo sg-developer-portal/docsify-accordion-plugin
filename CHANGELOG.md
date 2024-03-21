@@ -1,3 +1,10 @@
+## [1.0.15](https://github.com/sg-developer-portal/docsify-accordion-plugin/compare/v1.0.14...v1.0.15) (2024-03-21)
+
+
+### Bug Fixes
+
+* test ci ([1686013](https://github.com/sg-developer-portal/docsify-accordion-plugin/commit/16860135d895068390cd21b6f3ddf9255ef3d72d))
+
 # Changelog
 
 All notable changes to this project will be documented in this file.
